@@ -1,0 +1,171 @@
+.sidebar {
+  width: 240px;
+  min-height: 100vh;
+  background: #171a23;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 24px 16px;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+.sidebar-logo {
+  color: #fff;
+  font-size: 1.1rem;
+  margin: 0 0 28px;
+  padding: 0 8px;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sidebar-link {
+  color: #9198a8;
+  text-decoration: none;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.sidebar-link:hover {
+  background: #1f2330;
+  color: #fff;
+}
+
+.sidebar-link.active {
+  background: #6366f1;
+  color: #fff;
+}
+
+.sidebar-bottom {
+  border-top: 1px solid #262a37;
+  padding-top: 16px;
+}
+
+.sidebar-user {
+  display: flex;
+  flex-direction: column;
+  padding: 0 8px;
+  margin-bottom: 12px;
+}
+
+.sidebar-user-name {
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.sidebar-user-email {
+  color: #6b7280;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar-logout {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #2a2e3a;
+  background: transparent;
+  color: #f87171;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.sidebar-logout:hover {
+  background: #2a1418;
+}
+
+/* --- Mobile top bar + hamburger (hidden on desktop) --- */
+.sidebar-mobile-bar {
+  display: none;
+}
+
+.sidebar-toggle {
+  background: transparent;
+  border: 1px solid #2a2e3a;
+  color: #fff;
+  font-size: 1.1rem;
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.sidebar-overlay {
+  display: none;
+}
+
+/* --- Layout wrapper --- */
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.layout-content {
+  flex: 1;
+  min-width: 0;
+  overflow-x: hidden;
+}
+
+@media (max-width: 768px) {
+  .layout {
+    flex-direction: column;
+  }
+
+  /* Show top bar with hamburger, hide desktop logo inside sidebar */
+  .sidebar-mobile-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #171a23;
+    padding: 14px 16px;
+    position: sticky;
+    top: 0;
+    z-index: 30;
+  }
+
+  .sidebar-mobile-bar .sidebar-logo {
+    margin: 0;
+    font-size: 1rem;
+    padding: 0;
+  }
+
+  .sidebar-logo-desktop {
+    display: none;
+  }
+
+  /* Sidebar becomes an off-canvas drawer */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 240px;
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
+    z-index: 40;
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .sidebar-overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 35;
+  }
+}
