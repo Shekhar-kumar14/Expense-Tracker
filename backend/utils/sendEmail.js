@@ -1,30 +1,25 @@
-const nodemailer = require("nodemailer");
+const { Resend } = require("resend");
 
-// Uses Gmail SMTP. In your .env set:
-// EMAIL_USER=youremail@gmail.com
-// EMAIL_PASS=your_16_char_gmail_app_password  (NOT your normal gmail password)
-// Generate an App Password from: Google Account -> Security -> 2-Step Verification -> App Passwords
+// Uses Resend HTTP API instead of SMTP (Render blocks outbound SMTP ports on free tier).
+// In your .env / Render Environment set:
+// RESEND_API_KEY=your_resend_api_key
 
-const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 465,
-  secure: true,
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-  // Force IPv4 - some hosts (like Render's free tier) can't reach Gmail over IPv6
-  family: 4,
-});
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 const sendEmail = async (to, subject, text) => {
   try {
-    await transporter.sendMail({
-      from: `"Expense Tracker" <${process.env.EMAIL_USER}>`,
+    const { data, error } = await resend.emails.send({
+      from: "Expense Tracker <onboarding@resend.dev>", // apna verified domain hone par yahan replace kar dena
       to,
       subject,
       text,
     });
+
+    if (error) {
+      console.error("Email send error:", error);
+      return false;
+    }
+
     return true;
   } catch (error) {
     console.error("Email send error:", error.message);
